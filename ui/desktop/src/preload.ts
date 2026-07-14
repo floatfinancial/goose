@@ -132,6 +132,23 @@ type ElectronAPI = {
   setSetting: <K extends SettingKey>(key: K, value: Settings[K]) => Promise<void>;
   getSecretKey: () => Promise<string | null>;
   getAcpUrl: () => Promise<string | null>;
+  awsSsoStart: (args: {
+    startUrl: string;
+    ssoRegion: string;
+    bedrockRegion?: string;
+    model?: string;
+  }) => Promise<{ ok: boolean }>;
+  awsSsoGetDefaults: () => Promise<{
+    startUrl: string;
+    ssoRegion: string;
+    bedrockRegion: string;
+  }>;
+  onAwsSsoEvent: (
+    callback: (event: {
+      type: 'prompt' | 'success' | 'error' | 'exit';
+      [key: string]: unknown;
+    }) => void
+  ) => () => void;
   setWakelock: (enable: boolean) => Promise<boolean>;
   getWakelockState: () => Promise<boolean>;
   setSpellcheck: (enable: boolean) => Promise<boolean>;
@@ -254,6 +271,24 @@ const electronAPI: ElectronAPI = {
   },
   getSecretKey: () => ipcRenderer.invoke('get-secret-key'),
   getAcpUrl: () => ipcRenderer.invoke('get-acp-url'),
+  awsSsoStart: (args: {
+    startUrl: string;
+    ssoRegion: string;
+    bedrockRegion?: string;
+    model?: string;
+  }) => ipcRenderer.invoke('aws-sso:start', args),
+  awsSsoGetDefaults: () => ipcRenderer.invoke('aws-sso:get-defaults'),
+  onAwsSsoEvent: (
+    callback: (event: {
+      type: 'prompt' | 'success' | 'error' | 'exit';
+      [key: string]: unknown;
+    }) => void
+  ) => {
+    const listener = (_e: Electron.IpcRendererEvent, payload: unknown) =>
+      callback(payload as Parameters<typeof callback>[0]);
+    ipcRenderer.on('aws-sso:event', listener);
+    return () => ipcRenderer.removeListener('aws-sso:event', listener);
+  },
   setWakelock: (enable: boolean) => ipcRenderer.invoke('set-wakelock', enable),
   getWakelockState: () => ipcRenderer.invoke('get-wakelock-state'),
   setSpellcheck: (enable: boolean) => ipcRenderer.invoke('set-spellcheck', enable),

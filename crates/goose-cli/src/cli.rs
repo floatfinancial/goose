@@ -704,6 +704,61 @@ enum GatewayCommand {
     },
 }
 
+#[derive(Subcommand, Debug, Clone)]
+enum AuthCommand {
+    /// Configure AWS SSO (IAM Identity Center) and switch Goose to Amazon Bedrock.
+    #[command(
+        name = "aws-sso",
+        about = "Sign in to AWS SSO (Identity Center) and configure Bedrock"
+    )]
+    AwsSso {
+        /// AWS SSO start URL, e.g. https://<your-org>.awsapps.com/start.
+        /// Falls back to GOOSE_AWS_SSO_START_URL.
+        #[arg(long)]
+        start_url: Option<String>,
+
+        /// Region hosting your AWS Identity Center instance. Defaults to us-east-1.
+        /// Falls back to GOOSE_AWS_SSO_REGION.
+        #[arg(long)]
+        sso_region: Option<String>,
+
+        /// Region to use when calling Bedrock at inference time. Defaults to sso-region.
+        /// Falls back to GOOSE_AWS_BEDROCK_REGION.
+        #[arg(long)]
+        bedrock_region: Option<String>,
+
+        /// Default model to set for the Bedrock provider.
+        #[arg(long)]
+        model: Option<String>,
+
+        /// Emit newline-delimited JSON events on stdout instead of pretty output.
+        /// Used by the desktop app to drive the sign-in modal.
+        #[arg(long)]
+        json: bool,
+    },
+}
+
+async fn handle_auth_subcommand(cmd: AuthCommand) -> Result<()> {
+    match cmd {
+        AuthCommand::AwsSso {
+            start_url,
+            sso_region,
+            bedrock_region,
+            model,
+            json,
+        } => {
+            crate::commands::auth::handle_aws_sso(
+                start_url,
+                sso_region,
+                bedrock_region,
+                model,
+                json,
+            )
+            .await
+        }
+    }
+}
+
 #[derive(Subcommand)]
 enum PluginCommand {
     /// Install a plugin from a git repository URL
@@ -818,6 +873,9 @@ enum Command {
 
     #[command(about = "Check that your Goose setup is working")]
     Doctor {},
+
+    #[command(about = "Authenticate goose against a cloud provider", subcommand)]
+    Auth(AuthCommand),
 
     /// Manage system prompts and behaviors
     #[command(about = "Run one of the mcp servers bundled with goose")]
@@ -1338,6 +1396,7 @@ fn get_command_name(command: &Option<Command>) -> &'static str {
     match command {
         Some(Command::Configure {}) => "configure",
         Some(Command::Doctor {}) => "doctor",
+        Some(Command::Auth(_)) => "auth",
         Some(Command::Info { .. }) => "info",
         Some(Command::Mcp { .. }) => "mcp",
         Some(Command::Acp { .. }) => "acp",
@@ -2226,6 +2285,7 @@ pub async fn cli() -> anyhow::Result<()> {
         }
         Some(Command::Configure {}) => handle_configure().await,
         Some(Command::Doctor {}) => crate::commands::doctor::handle_doctor().await,
+        Some(Command::Auth(cmd)) => handle_auth_subcommand(cmd).await,
         Some(Command::Info { verbose, check }) => handle_info(verbose, check).await,
         Some(Command::Mcp { server }) => handle_mcp_command(server).await,
         Some(Command::Acp { builtins }) => goose::acp::server::run(builtins).await,

@@ -1,3 +1,4 @@
+pub mod auth;
 pub mod configure;
 pub mod doctor;
 pub mod gateway;

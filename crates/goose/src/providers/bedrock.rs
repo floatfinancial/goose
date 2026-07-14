@@ -35,8 +35,19 @@ pub(crate) const BEDROCK_PROVIDER_NAME: &str = "aws_bedrock";
 pub const BEDROCK_DOC_LINK: &str =
     "https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html";
 
-pub const BEDROCK_DEFAULT_MODEL: &str = "us.anthropic.claude-sonnet-4-5-20250929-v1:0";
+pub const BEDROCK_DEFAULT_MODEL: &str = "global.anthropic.claude-sonnet-5";
+/// Preferred models pinned to the top of the model picker, in order.
+/// Anything present in this list AND surfaced by the AWS SSO identity's
+/// `ListInferenceProfiles` / `ListFoundationModels` response is floated to
+/// the front; the rest of the models follow sorted alphabetically.
+pub const BEDROCK_PREFERRED_MODELS: &[&str] = &[
+    "global.anthropic.claude-sonnet-5",
+    "us.anthropic.claude-opus-4-8",
+];
 pub const BEDROCK_KNOWN_MODELS: &[&str] = &[
+    "global.anthropic.claude-sonnet-5",
+    "us.anthropic.claude-opus-4-8",
+    "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
     "global.anthropic.claude-sonnet-5",
     "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
     "us.anthropic.claude-sonnet-4-20250514-v1:0",
@@ -66,6 +77,8 @@ pub struct BedrockProvider {
     bearer_token: Option<String>,
     #[serde(skip)]
     http_client: reqwest::Client,
+    #[serde(skip)]
+    sdk_config: Option<aws_config::SdkConfig>,
     #[serde(skip)]
     mantle_base_url: Option<String>,
 }
@@ -178,8 +191,76 @@ impl BedrockProvider {
             region: resolved_region,
             bearer_token,
             http_client: reqwest::Client::new(),
+            sdk_config: Some(sdk_config),
             mantle_base_url: None,
         })
+    }
+
+    /// Enumerate models the current identity can actually see: cross-region
+    /// inference profiles (what Claude / recent models are invoked as) plus
+    /// on-demand foundation models. Returns an empty vec if credentials aren't
+    /// available; callers fall back to the static list.
+    async fn fetch_supported_models_from_aws(&self) -> Result<Vec<String>, anyhow::Error> {
+        let Some(sdk_config) = self.sdk_config.as_ref() else {
+            return Ok(Vec::new());
+        };
+        let client = aws_sdk_bedrock::Client::new(sdk_config);
+        let mut ids: Vec<String> = Vec::new();
+
+        // Cross-region inference profiles — the IDs that actually work at invoke
+        // time for the majority of chat models. Failures here should not kill
+        // the enumeration; some roles have foundation model access without
+        // profile-listing permissions.
+        match client.list_inference_profiles().send().await {
+            Ok(resp) => {
+                for p in resp.inference_profile_summaries() {
+                    ids.push(p.inference_profile_id.clone());
+                }
+            }
+            Err(e) => tracing::debug!("list_inference_profiles failed: {}", e),
+        }
+
+        match client.list_foundation_models().send().await {
+            Ok(resp) => {
+                for m in resp.model_summaries() {
+                    let supports_on_demand = m
+                        .inference_types_supported()
+                        .iter()
+                        .any(|t| t.as_str() == "ON_DEMAND");
+                    if supports_on_demand {
+                        ids.push(m.model_id.clone());
+                    }
+                }
+            }
+            Err(e) => tracing::debug!("list_foundation_models failed: {}", e),
+        }
+
+        ids.sort();
+        ids.dedup();
+
+        // Float preferred models (sonnet-5, opus-4-8) to the top of the picker,
+        // in the order they appear in BEDROCK_PREFERRED_MODELS. Anything the
+        // caller doesn't have access to is silently dropped from the pinned
+        // slice — no phantom entries in the picker.
+        let mut pinned: Vec<String> = Vec::new();
+        let mut rest: Vec<String> = Vec::new();
+        let preferred: std::collections::HashSet<&str> =
+            BEDROCK_PREFERRED_MODELS.iter().copied().collect();
+        for id in ids {
+            if preferred.contains(id.as_str()) {
+                pinned.push(id);
+            } else {
+                rest.push(id);
+            }
+        }
+        pinned.sort_by_key(|id| {
+            BEDROCK_PREFERRED_MODELS
+                .iter()
+                .position(|p| *p == id)
+                .unwrap_or(usize::MAX)
+        });
+        pinned.extend(rest);
+        Ok(pinned)
     }
 
     async fn create_client_with_credentials(sdk_config: &aws_config::SdkConfig) -> Result<Client> {
@@ -733,7 +814,23 @@ impl Provider for BedrockProvider {
     }
 
     async fn fetch_supported_models(&self) -> Result<Vec<String>, ProviderError> {
-        Ok(BEDROCK_KNOWN_MODELS.iter().map(|s| s.to_string()).collect())
+        // Ask Bedrock's control plane which models the current AWS SSO / IAM
+        // identity can actually see. Falls back to the static list if the
+        // caller's role is missing `bedrock:ListInferenceProfiles` /
+        // `bedrock:ListFoundationModels`, or the API is temporarily unreachable.
+        // ponytail: no caching — each call is 2 round trips (~200ms). Add TTL
+        // cache if the model picker becomes chatty.
+        match self.fetch_supported_models_from_aws().await {
+            Ok(models) if !models.is_empty() => Ok(models),
+            Ok(_) => Ok(BEDROCK_KNOWN_MODELS.iter().map(|s| s.to_string()).collect()),
+            Err(e) => {
+                tracing::warn!(
+                    "Bedrock model enumeration failed, falling back to static list: {}",
+                    e
+                );
+                Ok(BEDROCK_KNOWN_MODELS.iter().map(|s| s.to_string()).collect())
+            }
+        }
     }
 
     async fn stream(
@@ -930,6 +1027,7 @@ mod tests {
                 region: None,
                 bearer_token: None,
                 http_client: reqwest::Client::new(),
+                sdk_config: None,
                 mantle_base_url: None,
             },
             ModelConfig {
@@ -1102,6 +1200,7 @@ mod tests {
             region: Some("us-east-1".to_string()),
             bearer_token: Some("test-token".to_string()),
             http_client: reqwest::Client::new(),
+            sdk_config: None,
             mantle_base_url: Some(format!("{}/openai/v1/responses", server.uri())),
         };
 

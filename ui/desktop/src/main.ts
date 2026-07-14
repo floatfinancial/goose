@@ -26,6 +26,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { execFileSync, spawn, execFile } from 'child_process';
 import 'dotenv/config';
+import { registerAwsSsoIpc } from './awsSsoIpc';
 import { checkBackendStatus } from './backendStatus';
 import { startGooseServe } from './gooseServe';
 import { GooseServeLeaseRegistry, type GooseServeLease } from './gooseServeLeaseRegistry';
@@ -2423,6 +2424,11 @@ async function appMain() {
   await ensureWinShims();
 
   registerUpdateIpcHandlers();
+
+  registerAwsSsoIpc({
+    isPackaged: app.isPackaged,
+    resourcesPath: app.isPackaged ? process.resourcesPath : '',
+  });
 
   // Handle microphone permission requests
   session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {
