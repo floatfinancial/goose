@@ -35,8 +35,19 @@ pub(crate) const BEDROCK_PROVIDER_NAME: &str = "aws_bedrock";
 pub const BEDROCK_DOC_LINK: &str =
     "https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html";
 
-pub const BEDROCK_DEFAULT_MODEL: &str = "us.anthropic.claude-sonnet-4-5-20250929-v1:0";
+pub const BEDROCK_DEFAULT_MODEL: &str = "global.anthropic.claude-sonnet-5";
+/// Preferred models pinned to the top of the model picker, in order.
+/// Anything present in this list AND surfaced by the AWS SSO identity's
+/// `ListInferenceProfiles` / `ListFoundationModels` response is floated to
+/// the front; the rest of the models follow sorted alphabetically.
+pub const BEDROCK_PREFERRED_MODELS: &[&str] = &[
+    "global.anthropic.claude-sonnet-5",
+    "us.anthropic.claude-opus-4-8",
+];
 pub const BEDROCK_KNOWN_MODELS: &[&str] = &[
+    "global.anthropic.claude-sonnet-5",
+    "us.anthropic.claude-opus-4-8",
+    "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
     "global.anthropic.claude-sonnet-5",
     "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
     "us.anthropic.claude-sonnet-4-20250514-v1:0",
@@ -226,7 +237,30 @@ impl BedrockProvider {
 
         ids.sort();
         ids.dedup();
-        Ok(ids)
+
+        // Float preferred models (sonnet-5, opus-4-8) to the top of the picker,
+        // in the order they appear in BEDROCK_PREFERRED_MODELS. Anything the
+        // caller doesn't have access to is silently dropped from the pinned
+        // slice — no phantom entries in the picker.
+        let mut pinned: Vec<String> = Vec::new();
+        let mut rest: Vec<String> = Vec::new();
+        let preferred: std::collections::HashSet<&str> =
+            BEDROCK_PREFERRED_MODELS.iter().copied().collect();
+        for id in ids {
+            if preferred.contains(id.as_str()) {
+                pinned.push(id);
+            } else {
+                rest.push(id);
+            }
+        }
+        pinned.sort_by_key(|id| {
+            BEDROCK_PREFERRED_MODELS
+                .iter()
+                .position(|p| *p == id)
+                .unwrap_or(usize::MAX)
+        });
+        pinned.extend(rest);
+        Ok(pinned)
     }
 
     async fn create_client_with_credentials(sdk_config: &aws_config::SdkConfig) -> Result<Client> {
