@@ -209,6 +209,8 @@ function ApiKeyForm({
   );
 }
 
+import AwsSsoModal from './AwsSsoModal';
+
 interface ProviderConfigFormProps {
   provider: ProviderDetails;
   onConfigured: OnConfigured;
@@ -216,10 +218,33 @@ interface ProviderConfigFormProps {
 
 export default function ProviderConfigForm({ provider, onConfigured }: ProviderConfigFormProps) {
   const [error, setError] = useState<string | null>(null);
+  const [showAwsSsoModal, setShowAwsSsoModal] = useState(false);
 
   const isOAuthProvider = provider.metadata.config_keys.some((key) => key.oauth_flow);
+  const isBedrock = provider.name === 'aws_bedrock';
 
   const renderForm = () => {
+    if (isBedrock) {
+      return (
+        <div className="flex flex-col gap-3">
+          <p className="text-sm text-text-muted">
+            Sign in with your AWS Identity Center account and Goose will configure Bedrock for you.
+            No API keys, no local AWS CLI setup.
+          </p>
+          <Button onClick={() => setShowAwsSsoModal(true)} className="w-full">
+            Sign in with AWS SSO
+          </Button>
+          <details className="text-xs text-text-muted">
+            <summary className="cursor-pointer hover:text-text-default">
+              Advanced: configure with AWS_PROFILE / bearer token
+            </summary>
+            <div className="mt-3">
+              <ApiKeyForm provider={provider} onConfigured={onConfigured} onError={setError} />
+            </div>
+          </details>
+        </div>
+      );
+    }
     if (isOAuthProvider) {
       return <OAuthForm provider={provider} onConfigured={onConfigured} onError={setError} />;
     }
@@ -245,6 +270,7 @@ export default function ProviderConfigForm({ provider, onConfigured }: ProviderC
           </div>
         )}
       </div>
+      <AwsSsoModal open={showAwsSsoModal} onOpenChange={setShowAwsSsoModal} />
     </div>
   );
 }

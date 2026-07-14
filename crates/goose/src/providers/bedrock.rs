@@ -67,6 +67,8 @@ pub struct BedrockProvider {
     #[serde(skip)]
     http_client: reqwest::Client,
     #[serde(skip)]
+    sdk_config: Option<aws_config::SdkConfig>,
+    #[serde(skip)]
     mantle_base_url: Option<String>,
 }
 
@@ -178,8 +180,53 @@ impl BedrockProvider {
             region: resolved_region,
             bearer_token,
             http_client: reqwest::Client::new(),
+            sdk_config: Some(sdk_config),
             mantle_base_url: None,
         })
+    }
+
+    /// Enumerate models the current identity can actually see: cross-region
+    /// inference profiles (what Claude / recent models are invoked as) plus
+    /// on-demand foundation models. Returns an empty vec if credentials aren't
+    /// available; callers fall back to the static list.
+    async fn fetch_supported_models_from_aws(&self) -> Result<Vec<String>, anyhow::Error> {
+        let Some(sdk_config) = self.sdk_config.as_ref() else {
+            return Ok(Vec::new());
+        };
+        let client = aws_sdk_bedrock::Client::new(sdk_config);
+        let mut ids: Vec<String> = Vec::new();
+
+        // Cross-region inference profiles — the IDs that actually work at invoke
+        // time for the majority of chat models. Failures here should not kill
+        // the enumeration; some roles have foundation model access without
+        // profile-listing permissions.
+        match client.list_inference_profiles().send().await {
+            Ok(resp) => {
+                for p in resp.inference_profile_summaries() {
+                    ids.push(p.inference_profile_id.clone());
+                }
+            }
+            Err(e) => tracing::debug!("list_inference_profiles failed: {}", e),
+        }
+
+        match client.list_foundation_models().send().await {
+            Ok(resp) => {
+                for m in resp.model_summaries() {
+                    let supports_on_demand = m
+                        .inference_types_supported()
+                        .iter()
+                        .any(|t| t.as_str() == "ON_DEMAND");
+                    if supports_on_demand {
+                        ids.push(m.model_id.clone());
+                    }
+                }
+            }
+            Err(e) => tracing::debug!("list_foundation_models failed: {}", e),
+        }
+
+        ids.sort();
+        ids.dedup();
+        Ok(ids)
     }
 
     async fn create_client_with_credentials(sdk_config: &aws_config::SdkConfig) -> Result<Client> {
@@ -733,7 +780,23 @@ impl Provider for BedrockProvider {
     }
 
     async fn fetch_supported_models(&self) -> Result<Vec<String>, ProviderError> {
-        Ok(BEDROCK_KNOWN_MODELS.iter().map(|s| s.to_string()).collect())
+        // Ask Bedrock's control plane which models the current AWS SSO / IAM
+        // identity can actually see. Falls back to the static list if the
+        // caller's role is missing `bedrock:ListInferenceProfiles` /
+        // `bedrock:ListFoundationModels`, or the API is temporarily unreachable.
+        // ponytail: no caching — each call is 2 round trips (~200ms). Add TTL
+        // cache if the model picker becomes chatty.
+        match self.fetch_supported_models_from_aws().await {
+            Ok(models) if !models.is_empty() => Ok(models),
+            Ok(_) => Ok(BEDROCK_KNOWN_MODELS.iter().map(|s| s.to_string()).collect()),
+            Err(e) => {
+                tracing::warn!(
+                    "Bedrock model enumeration failed, falling back to static list: {}",
+                    e
+                );
+                Ok(BEDROCK_KNOWN_MODELS.iter().map(|s| s.to_string()).collect())
+            }
+        }
     }
 
     async fn stream(
@@ -930,6 +993,7 @@ mod tests {
                 region: None,
                 bearer_token: None,
                 http_client: reqwest::Client::new(),
+                sdk_config: None,
                 mantle_base_url: None,
             },
             ModelConfig {
@@ -1102,6 +1166,7 @@ mod tests {
             region: Some("us-east-1".to_string()),
             bearer_token: Some("test-token".to_string()),
             http_client: reqwest::Client::new(),
+            sdk_config: None,
             mantle_base_url: Some(format!("{}/openai/v1/responses", server.uri())),
         };
 

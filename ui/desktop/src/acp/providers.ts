@@ -8,6 +8,7 @@ import type {
 } from '@aaif/goose-sdk';
 import type { ProviderDetails, ThinkingEffort, UpdateCustomProviderRequest } from '../types/providers';
 import { getAcpClient } from './acpConnection';
+import { VISIBLE_PROVIDERS } from '../distroConfig';
 
 export type { CanonicalModelInfoDto, ProviderSecretDto };
 
@@ -32,7 +33,10 @@ function updateRequestToCreate(
 export async function acpListProviderDetails(): Promise<ProviderDetails[]> {
   const client = await getAcpClient();
   const { entries } = await client.goose.providersList_unstable({});
-  return entries.map((entry) => ({
+  const visibleProviders = new Set(VISIBLE_PROVIDERS);
+  return entries
+    .filter((entry) => visibleProviders.has(entry.providerId))
+    .map((entry) => ({
     name: entry.providerId,
     is_configured: entry.configured,
     provider_type: entry.providerType as ProviderDetails['provider_type'],
@@ -65,7 +69,29 @@ export async function acpListProviderDetails(): Promise<ProviderDetails[]> {
 export async function acpListProviderModels(providerId: string) {
   const client = await getAcpClient();
   const { entries } = await client.goose.providersList_unstable({ providerIds: [providerId] });
-  return entries.find((e) => e.providerId === providerId)?.models ?? [];
+  const staticModels = entries.find((e) => e.providerId === providerId)?.models ?? [];
+
+  // Ask the provider to enumerate at runtime (Bedrock lists what the current
+  // AWS SSO identity can invoke). Merge with the static inventory so we keep
+  // context limits / reasoning flags where they're known.
+  try {
+    const { models: runtimeIds } = await client.goose.providersSupportedModelsList_unstable({
+      providerId,
+    });
+    if (runtimeIds.length === 0) return staticModels;
+
+    const byId = new Map(staticModels.map((m) => [m.id, m]));
+    return runtimeIds.map(
+      (id) =>
+        byId.get(id) ?? {
+          id,
+          name: id,
+        }
+    );
+  } catch (err) {
+    console.warn(`providersSupportedModelsList_unstable failed for ${providerId}:`, err);
+    return staticModels;
+  }
 }
 
 export async function acpListProviderCatalogEntries(
