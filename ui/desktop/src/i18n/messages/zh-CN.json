@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "使用其他提供商"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "是否愿意分享匿名使用数据帮助改进 goose？我们绝不采集你的对话、代码或个人数据。"
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "帮助改进 goose"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "了解更多"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "是的，分享匿名使用数据"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "不用了"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "配置错误"
   },

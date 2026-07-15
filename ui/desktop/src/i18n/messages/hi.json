@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "अन्य प्रदाता का उपयोग करें"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "क्या आप goose को बेहतर बनाने में सहायता के लिए अनाम उपयोग डेटा साझा करना चाहेंगे? हम कभी भी आपकी बातचीत, कोड या व्यक्तिगत डेटा एकत्र नहीं करते हैं।"
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "goose को बेहतर बनाने में सहायता करें"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "और जानें"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "हाँ, अनाम उपयोग डेटा साझा करें"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "नहीं धन्यवाद"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "कॉन्फ़िगरेशन त्रुटि"
   },

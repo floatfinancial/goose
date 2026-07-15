@@ -4,6 +4,21 @@
 default:
   @just --list
 
+# Start a sync branch from upstream/main. Resolve conflicts using
+# docs/float-fork/PATCHES.md, then run `just check-everything` and open a PR.
+# The `sync-fork` skill (.pi/skills/sync-fork/SKILL.md) drives the full flow.
+sync-fork:
+    @test -z "$(git status --porcelain)" || (echo "working tree not clean" && exit 1)
+    @test "$(git rev-parse --abbrev-ref HEAD)" = "main" || (echo "not on main" && exit 1)
+    git fetch upstream
+    git checkout -b sync/upstream-$(date +%Y-%m-%d)
+    git merge upstream/main --no-ff --no-commit
+    @echo
+    @echo "Merge in progress. Next steps:"
+    @echo "  1. Resolve conflicts per docs/float-fork/PATCHES.md"
+    @echo "  2. just check-everything && cargo test -p goose"
+    @echo "  3. git commit && git push -u origin HEAD && gh pr create --base main"
+
 # Run all style checks and formatting (precommit validation)
 check-everything:
     @echo "🔧 RUNNING ALL STYLE CHECKS..."

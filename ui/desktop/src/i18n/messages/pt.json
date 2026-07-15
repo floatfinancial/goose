@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "Utilizar outro fornecedor"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "Gostaria de partilhar dados de utilização anónimos para ajudar a melhorar o goose? Nunca recolhemos as suas conversas, código ou dados pessoais."
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "Ajude a melhorar o goose"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "Saber mais"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "Sim, partilhar dados de utilização anónimos"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "Não, obrigado"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "Erro de Configuração"
   },
