@@ -1701,10 +1701,10 @@
     "defaultMessage": "Chiedi qualsiasi cosa a goose..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose sta compattando la conversazione..."
+    "defaultMessage": "Sponge sta compattando la conversazione..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose ci sta lavorando…"
+    "defaultMessage": "Sponge ci sta lavorando…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "caricamento conversazione..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "riavvio della sessione..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose ci sta lavorando…"
+    "defaultMessage": "Sponge ci sta lavorando…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose sta pensando…"
+    "defaultMessage": "Sponge sta pensando…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose è in attesa…"
+    "defaultMessage": "Sponge è in attesa…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Eliminare questo modello? Potrai scaricarlo di nuovo in seguito."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Il server potrebbe essere in fase di avvio o temporaneamente non disponibile."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Impossibile connettersi al server Goose"
+    "defaultMessage": "Impossibile connettersi al server Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Riprova"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Il tuo agente IA locale. Collega un provider di modelli IA per iniziare."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Benvenuto in goose"
+    "defaultMessage": "Benvenuto in Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Tutto è pronto per iniziare a usare goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Riprova"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Tu"

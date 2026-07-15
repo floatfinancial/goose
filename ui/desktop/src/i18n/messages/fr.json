@@ -1701,10 +1701,10 @@
     "defaultMessage": "Demandez n'importe quoi à goose..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose compacte la conversation..."
+    "defaultMessage": "Sponge compacte la conversation..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose y travaille…"
+    "defaultMessage": "Sponge y travaille…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "chargement de la conversation..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "redémarrage de la session..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose y travaille…"
+    "defaultMessage": "Sponge y travaille…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose réfléchit…"
+    "defaultMessage": "Sponge réfléchit…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose patiente…"
+    "defaultMessage": "Sponge patiente…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Supprimer ce modèle ? Vous pourrez le retélécharger plus tard."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Le serveur est peut-être en cours de démarrage ou temporairement indisponible."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Impossible de se connecter au serveur Goose"
+    "defaultMessage": "Impossible de se connecter au serveur Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Réessayer"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Votre agent IA local. Connectez un fournisseur de modèle IA pour commencer."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Bienvenue dans goose"
+    "defaultMessage": "Bienvenue dans Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Vous êtes prêt à commencer à utiliser goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Réessayer"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Vous"

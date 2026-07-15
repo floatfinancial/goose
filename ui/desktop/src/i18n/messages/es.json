@@ -1701,10 +1701,10 @@
     "defaultMessage": "Pregúntale lo que sea a goose..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose está compactando la conversación..."
+    "defaultMessage": "Sponge está compactando la conversación..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose está trabajando en ello…"
+    "defaultMessage": "Sponge está trabajando en ello…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "cargando conversación..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "reiniciando sesión..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose está trabajando en ello…"
+    "defaultMessage": "Sponge está trabajando en ello…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose está pensando…"
+    "defaultMessage": "Sponge está pensando…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose está esperando…"
+    "defaultMessage": "Sponge está esperando…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "¿Eliminar este modelo? Podrás volver a descargarlo más tarde."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Puede que el servidor se esté iniciando o no esté disponible temporalmente."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "No se pudo conectar con el servidor de Goose"
+    "defaultMessage": "No se pudo conectar con el servidor de Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Reintentar"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Tu agente de IA local. Conecta un proveedor de modelos de IA para empezar."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Te damos la bienvenida a goose"
+    "defaultMessage": "Te damos la bienvenida a Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Todo está listo para que empieces a usar goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Reintentar"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Tú"

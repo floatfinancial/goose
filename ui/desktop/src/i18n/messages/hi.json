@@ -1701,10 +1701,10 @@
     "defaultMessage": "goose से कुछ भी पूछें..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose बातचीत को संक्षिप्त कर रहा है..."
+    "defaultMessage": "Sponge बातचीत को संक्षिप्त कर रहा है..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose इस पर काम कर रहा है..."
+    "defaultMessage": "Sponge इस पर काम कर रहा है..."
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "बातचीत लोड हो रही है..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "सत्र पुनः प्रारंभ हो रहा है..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose इस पर काम कर रहा है..."
+    "defaultMessage": "Sponge इस पर काम कर रहा है..."
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose सोच रहा है..."
+    "defaultMessage": "Sponge सोच रहा है..."
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose इंतज़ार कर रहा है..."
+    "defaultMessage": "Sponge इंतज़ार कर रहा है..."
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "यह मॉडल हटाएं? आप इसे बाद में पुनः डाउनलोड कर सकते हैं."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "सर्वर चालू हो सकता है या अस्थायी रूप से अनुपलब्ध हो सकता है।"
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Goose सर्वर से कनेक्ट करने में असमर्थ"
+    "defaultMessage": "Sponge सर्वर से कनेक्ट करने में असमर्थ"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "पुनः प्रयास करें"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "आपका स्थानीय एआई एजेंट। आरंभ करने के लिए किसी AI मॉडल प्रदाता से कनेक्ट करें।"
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "goose में आपका स्वागत है"
+    "defaultMessage": "Sponge में आपका स्वागत है"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "आप goose का उपयोग शुरू करने के लिए पूरी तरह तैयार हैं।"
@@ -3732,7 +3732,7 @@
     "defaultMessage": "पुनः प्रयास करें"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "आप"

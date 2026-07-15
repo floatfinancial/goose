@@ -1701,10 +1701,10 @@
     "defaultMessage": "gooseに何でも聞いて..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "gooseが会話を圧縮しています..."
+    "defaultMessage": "Spongeが会話を圧縮しています..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "gooseが処理中です…"
+    "defaultMessage": "Spongeが処理中です…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "会話を読み込み中..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "セッションを再起動中..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "gooseが処理中です…"
+    "defaultMessage": "Spongeが処理中です…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "gooseが考えています…"
+    "defaultMessage": "Spongeが考えています…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "gooseが待機中です…"
+    "defaultMessage": "Spongeが待機中です…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "このモデルを削除しますか？後で再ダウンロードできます。"
@@ -2370,7 +2370,7 @@
     "defaultMessage": "サーバーの起動中、または一時的に利用できない可能性があります。"
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "gooseサーバーに接続できません"
+    "defaultMessage": "Spongeサーバーに接続できません"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "再試行"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "ローカルAIエージェントです。始めるにはAIモデルプロバイダーに接続してください。"
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "gooseへようこそ"
+    "defaultMessage": "Spongeへようこそ"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "gooseを使い始める準備ができました。"
@@ -3732,7 +3732,7 @@
     "defaultMessage": "再試行"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "あなた"

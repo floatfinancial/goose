@@ -33,7 +33,6 @@ import { GooseServeLeaseRegistry, type GooseServeLease } from './gooseServeLease
 import { acpWebSocketUrlFromHttpBase, normalizeAcpHttpBaseUrl } from './acp/url';
 import { expandTilde } from './utils/pathUtils';
 import log from './utils/logger';
-import { ensureWinShims } from './utils/winShims';
 import { addRecentDir, loadRecentDirs } from './utils/recentDirs';
 import { formatAppName, errorMessage, formatErrorForLogging } from './utils/conversionUtils';
 import { isRetiredGooseChatApp } from './utils/retiredApps';
@@ -755,7 +754,7 @@ app.on('open-url', async (_event, url) => {
 app.on('will-finish-launching', () => {
   if (process.platform === 'darwin') {
     app.setAboutPanelOptions({
-      applicationName: 'Goose',
+      applicationName: 'Sponge',
       applicationVersion: app.getVersion(),
     });
   }
@@ -810,7 +809,7 @@ async function handleFileOpen(filePath: string) {
 
     // Show user-friendly error notification
     new Notification({
-      title: 'Goose',
+      title: 'Sponge',
       body: `Could not open directory: ${path.basename(filePath)}`,
     }).show();
   }
@@ -2420,9 +2419,6 @@ async function appMain() {
 
   await configureProxy();
 
-  // Ensure Windows shims are available before any MCP processes are spawned
-  await ensureWinShims();
-
   registerUpdateIpcHandlers();
 
   registerAwsSsoIpc({
@@ -2519,7 +2515,7 @@ async function appMain() {
 
   const shortcuts = getKeyboardShortcuts(settings);
 
-  const appMenu = menu?.items.find((item) => item.label === 'Goose');
+  const appMenu = menu?.items.find((item) => item.label === 'Sponge');
   if (appMenu?.submenu) {
     appMenu.submenu.insert(1, new MenuItem({ type: 'separator' }));
     if (shortcuts.settings) {

@@ -37,22 +37,6 @@ release-binary:
     cargo build --release -p goose-cli --bin goose
     @just copy-binary
 
-# Build Windows executable on a Windows host
-[unix]
-release-windows:
-    @echo "just release-windows requires a Windows host because Goose Windows releases build the MSVC target. Use .github/workflows/bundle-desktop-windows.yml for CI builds."
-    @exit 1
-
-[windows]
-release-windows:
-    @powershell.exe -NoProfile -ExecutionPolicy Bypass -Command 'rustup target add x86_64-pc-windows-msvc; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cargo build --release --target x86_64-pc-windows-msvc -p goose-cli --bin goose; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Write-Host "Windows executable created at ./target/x86_64-pc-windows-msvc/release/goose.exe"'
-
-# Build for Intel Mac
-release-intel:
-    @echo "Building release version for Intel Mac..."
-    cargo build --release --target x86_64-apple-darwin
-    @just copy-binary-intel
-
 copy-binary BUILD_MODE="release":
     @rm -f ./ui/desktop/src/bin/goosed
     @if [ -f ./target/{{BUILD_MODE}}/goose ]; then \
@@ -63,36 +47,6 @@ copy-binary BUILD_MODE="release":
         echo "goose CLI binary not found in target/{{BUILD_MODE}}"; \
         exit 1; \
     fi
-
-# Copy binary command for Intel build
-copy-binary-intel:
-    @rm -f ./ui/desktop/src/bin/goosed
-    @if [ -f ./target/x86_64-apple-darwin/release/goose ]; then \
-        echo "Copying Intel goose CLI binary to ui/desktop/src/bin..."; \
-        rm -f ./ui/desktop/src/bin/goose; \
-        cp -p ./target/x86_64-apple-darwin/release/goose ./ui/desktop/src/bin/; \
-    else \
-        echo "Intel goose CLI binary not found."; \
-        exit 1; \
-    fi
-
-# Copy Windows binary command on a Windows host
-[unix]
-copy-binary-windows:
-    @echo "just copy-binary-windows requires a Windows host because it copies the MSVC build output."
-    @exit 1
-
-[windows]
-copy-binary-windows:
-    @powershell.exe -NoProfile -ExecutionPolicy Bypass -Command 'if (Test-Path ./target/x86_64-pc-windows-msvc/release/goose.exe) { \
-        Write-Host "Copying Windows binary to ui/desktop/src/bin..."; \
-        New-Item -ItemType Directory -Force "./ui/desktop/src/bin" | Out-Null; \
-        Remove-Item -Path "./ui/desktop/src/bin/goosed.exe" -Force -ErrorAction SilentlyContinue; \
-        Copy-Item -Path "./target/x86_64-pc-windows-msvc/release/goose.exe" -Destination "./ui/desktop/src/bin/" -Force; \
-    } else { \
-        Write-Host "Windows binary not found." -ForegroundColor Red; \
-        exit 1; \
-    }'
 
 # Run UI with latest
 run-ui:
@@ -142,15 +96,8 @@ package-ui:
     @echo "Packaging desktop app..."
     cd ui/desktop && pnpm install && pnpm run package
     @echo "Signing with entitlements..."
-    codesign --force --deep --sign - --entitlements ui/desktop/entitlements.plist ui/desktop/out/Goose-darwin-arm64/Goose.app
-    @echo "Done! Launch with: open ui/desktop/out/Goose-darwin-arm64/Goose.app"
-
-# Run UI with latest (Windows version)
-run-ui-windows:
-    @just release-windows
-    @powershell.exe -Command "Write-Host 'Copying Windows binary...'"
-    @just copy-binary-windows
-    @powershell.exe -Command "Write-Host 'Running UI...'; Set-Location ui/desktop; pnpm install; pnpm run start-gui"
+    codesign --force --deep --sign - --entitlements ui/desktop/entitlements.plist ui/desktop/out/Sponge-darwin-arm64/Sponge.app
+    @echo "Done! Launch with: open ui/desktop/out/Sponge-darwin-arm64/Sponge.app"
 
 # Run Docusaurus server for documentation
 run-docs:
@@ -208,23 +155,6 @@ lint-ui:
 make-ui:
     @just release-binary
     cd ui/desktop && pnpm run bundle:default
-
-# make GUI with latest Windows binary on a Windows host
-[unix]
-make-ui-windows:
-    @echo "just make-ui-windows requires a Windows host because Goose Windows releases build the MSVC target. Use .github/workflows/bundle-desktop-windows.yml for CI builds."
-    @exit 1
-
-[windows]
-make-ui-windows:
-    @just release-windows
-    @just copy-binary-windows
-    @powershell.exe -NoProfile -ExecutionPolicy Bypass -Command 'Set-Location ui/desktop; $env:ELECTRON_PLATFORM="win32"; node scripts/prepare-platform-binaries.js; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; pnpm run make --platform=win32 --arch=x64; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Write-Host "Windows package build complete!"'
-
-# make GUI with latest binary
-make-ui-intel:
-    @just release-intel
-    cd ui/desktop && pnpm run bundle:intel
 
 
 
@@ -340,93 +270,6 @@ tag-push: tag
 release-notes old:
     #!/usr/bin/env bash
     git log --pretty=format:"- %s" {{ old }}..v$(just get-tag-version)
-
-### s = file separator based on OS
-s := if os() == "windows" { "\\" } else { "/" }
-linux_vulkan_features := if os() == "linux" { "--features vulkan" } else { "" }
-
-### testing/debugging
-os:
-  echo "{{os()}}"
-  echo "{{s}}"
-
-# Make just work on Window
-set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
-
-### Build the core code
-### profile = --release or "" for debug
-### allparam = OR/AND/ANY/NONE --workspace --all-features --all-targets
-win-bld profile allparam:
-  cargo build {{profile}} {{allparam}}
-
-### Build just debug
-win-bld-dbg:
-  just win-bld " " " "
-
-### Build debug and test, examples,...
-win-bld-dbg-all:
-  just win-bld " " "--workspace --all-targets --all-features"
-
-### Build just release
-win-bld-rls:
-  just win-bld "--release" " "
-
-### Build release and test, examples, ...
-win-bld-rls-all:
-  just win-bld "--release" "--workspace --all-targets --all-features"
-
-### Install pnpm stuff
-win-app-deps:
-  cd ui{{s}}desktop ; pnpm install
-
-### Windows copy {release|debug} files to ui\desktop\src\bin
-### s = os dependent file separator
-### profile = release or debug
-win-copy-win profile:
-  copy target{{s}}{{profile}}{{s}}*.exe ui{{s}}desktop{{s}}src{{s}}bin
-  copy target{{s}}{{profile}}{{s}}*.dll ui{{s}}desktop{{s}}src{{s}}bin
-  if exist ui{{s}}desktop{{s}}src{{s}}bin{{s}}goosed.exe del /f /q ui{{s}}desktop{{s}}src{{s}}bin{{s}}goosed.exe
-
-### "Other" copy {release|debug} files to ui/desktop/src/bin
-### s = os dependent file separator
-### profile = release or debug
-win-copy-oth profile:
-  find target{{s}}{{profile}}{{s}} -maxdepth 1 -type f -executable -print -exec cp {} ui{{s}}desktop{{s}}src{{s}}bin \;
-
-### copy files depending on OS
-### profile = release or debug
-win-app-copy profile="release":
-  just win-copy-{{ if os() == "windows" { "win" } else { "oth" } }} {{profile}}
-
-### Only copy binaries, pnpm install, start-gui
-### profile = release or debug
-### s = os dependent file separator
-win-app-run profile:
-  just win-app-copy {{profile}}
-  just win-app-deps
-  cd ui{{s}}desktop ; pnpm run start-gui
-
-### Only run debug desktop, no build
-win-run-dbg:
-  just win-app-run "debug"
-
-### Only run release desktop, nu build
-win-run-rls:
-  just win-app-run "release"
-
-### Build and run debug desktop. tot = cli and desktop
-### allparam = nothing or -all passed on command line
-### -all = build with --workspace --all-targets --all-features
-win-total-dbg *allparam:
-  just win-bld-dbg{{allparam}}
-  just win-run-dbg
-
-### Build and run release desktop
-### allparam = nothing or -all passed on command line
-### -all = build with --workspace --all-targets --all-features
-win-total-rls *allparam:
-  just win-bld-rls{{allparam}}
-  just win-run-rls
 
 build-test-tools:
   cargo build -p goose-test

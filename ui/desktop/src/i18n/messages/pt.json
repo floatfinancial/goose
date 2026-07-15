@@ -1701,10 +1701,10 @@
     "defaultMessage": "Pergunte qualquer coisa ao goose..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "o goose está compactando a conversa..."
+    "defaultMessage": "o Sponge está compactando a conversa..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "o goose está trabalhando nisso…"
+    "defaultMessage": "o Sponge está trabalhando nisso…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "carregando conversa..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "reiniciando sessão..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "o goose está trabalhando nisso…"
+    "defaultMessage": "o Sponge está trabalhando nisso…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "o goose está pensando…"
+    "defaultMessage": "o Sponge está pensando…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "o goose está aguardando…"
+    "defaultMessage": "o Sponge está aguardando…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Excluir este modelo? Você poderá baixá-lo novamente mais tarde."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "O servidor pode estar a iniciar ou temporariamente indisponível."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Não foi possível ligar ao servidor Goose"
+    "defaultMessage": "Não foi possível ligar ao servidor Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Tentar novamente"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "O seu agente de IA local. Ligue um fornecedor de modelos de IA para começar."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Bem-vindo ao goose"
+    "defaultMessage": "Bem-vindo ao Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Está tudo pronto para começar a usar o goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Tentar novamente"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Você"

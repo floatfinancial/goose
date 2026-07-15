@@ -9,6 +9,15 @@
  */
 
 /**
+ * Human-readable product name shown in window titles, menus, About panel,
+ * and any place UI copy references "the app". Every hardcoded "Sponge"
+ * string in `main.ts`, `autoUpdater.ts`, `githubUpdater.ts`,
+ * `SessionViewComponents.tsx`, `forge.config.ts`, `package.json`,
+ * `index.html`, `forge.*.desktop` should read this or match it verbatim.
+ */
+export const APP_DISPLAY_NAME = 'Sponge';
+
+/**
  * Defaults for the "Sign in with AWS SSO" flow. When both `startUrl` and
  * `ssoRegion` are set, the modal skips its form and takes the user straight
  * to the browser — the one-click sign-in path.

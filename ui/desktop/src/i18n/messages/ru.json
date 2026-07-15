@@ -1701,10 +1701,10 @@
     "defaultMessage": "Спросите goose о чем угодно..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose сжимает разговор..."
+    "defaultMessage": "Sponge сжимает разговор..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose работает над этим…"
+    "defaultMessage": "Sponge работает над этим…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "загрузка разговора..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "перезапуск сеанса..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose работает над этим…"
+    "defaultMessage": "Sponge работает над этим…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose думает…"
+    "defaultMessage": "Sponge думает…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose ждет…"
+    "defaultMessage": "Sponge ждет…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Удалить эту модель? Позже ее можно скачать снова."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Сервер может запускаться или быть временно недоступен."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Не удалось подключиться к серверу Goose"
+    "defaultMessage": "Не удалось подключиться к серверу Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Повторить"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Ваш локальный ИИ-агент. Подключите провайдера ИИ-модели, чтобы начать."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Добро пожаловать в goose"
+    "defaultMessage": "Добро пожаловать в Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Все готово для начала работы с goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Повторить попытку"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Вы"

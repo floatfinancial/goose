@@ -1701,10 +1701,10 @@
     "defaultMessage": "Frag goose irgendetwas..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose komprimiert die Unterhaltung..."
+    "defaultMessage": "Sponge komprimiert die Unterhaltung..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose arbeitet daran…"
+    "defaultMessage": "Sponge arbeitet daran…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "Unterhaltung wird geladen..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "Sitzung wird neu gestartet..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose arbeitet daran…"
+    "defaultMessage": "Sponge arbeitet daran…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose denkt nach…"
+    "defaultMessage": "Sponge denkt nach…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose wartet…"
+    "defaultMessage": "Sponge wartet…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Dieses Modell löschen? Sie können es später erneut herunterladen."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Der Server startet möglicherweise gerade oder ist vorübergehend nicht verfügbar."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Verbindung zum Goose-Server nicht möglich"
+    "defaultMessage": "Verbindung zum Sponge-Server nicht möglich"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Erneut versuchen"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Ihr lokaler KI-Agent. Verbinden Sie einen KI-Modellanbieter, um zu beginnen."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Willkommen bei goose"
+    "defaultMessage": "Willkommen bei Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Sie können jetzt mit goose loslegen."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Erneut versuchen"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Sie"

@@ -1701,10 +1701,10 @@
     "defaultMessage": "问 goose 任何问题…"
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose 正在压缩对话…"
+    "defaultMessage": "Sponge 正在压缩对话…"
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose 正在处理…"
+    "defaultMessage": "Sponge 正在处理…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "正在加载对话…"
@@ -1713,13 +1713,13 @@
     "defaultMessage": "正在重启会话…"
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose 正在处理…"
+    "defaultMessage": "Sponge 正在处理…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose 正在思考…"
+    "defaultMessage": "Sponge 正在思考…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose 正在等待…"
+    "defaultMessage": "Sponge 正在等待…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "删除此模型？之后可以重新下载。"
@@ -2370,7 +2370,7 @@
     "defaultMessage": "服务器可能正在启动或暂时不可用。"
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "无法连接到 Goose 服务器"
+    "defaultMessage": "无法连接到 Sponge 服务器"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "重试"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "你的本地 AI agent。连接 AI 模型提供商即可开始。"
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "欢迎使用 goose"
+    "defaultMessage": "欢迎使用 Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "一切就绪，可以开始使用 goose 了。"
@@ -3732,7 +3732,7 @@
     "defaultMessage": "重试"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "你"
