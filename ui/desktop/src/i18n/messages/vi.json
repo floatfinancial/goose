@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "Sử dụng nhà cung cấp khác"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "Bạn có muốn chia sẻ dữ liệu sử dụng ẩn danh để giúp cải thiện goose không? Chúng tôi không bao giờ thu thập các cuộc trò chuyện, mã hoặc dữ liệu cá nhân của bạn."
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "Giúp cải thiện goose"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "Tìm hiểu thêm"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "Có, chia sẻ dữ liệu sử dụng ẩn danh"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "Không, cảm ơn"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "Lỗi cấu hình"
   },

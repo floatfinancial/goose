@@ -59,7 +59,6 @@ export default function AwsSsoModal({ open, onOpenChange }: AwsSsoModalProps) {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleSubmit = (e: React.FormEvent) => {

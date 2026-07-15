@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "Использовать другого провайдера"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "Хотите поделиться анонимными данными об использовании, чтобы помочь улучшить goose? Мы никогда не собираем ваши разговоры, код или персональные данные."
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "Помогите улучшить goose"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "Подробнее"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "Да, делиться анонимными данными об использовании"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "Нет, спасибо"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "Ошибка конфигурации"
   },

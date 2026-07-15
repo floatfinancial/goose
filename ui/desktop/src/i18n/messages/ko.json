@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "다른 제공업체 이용"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "goose 개선을 위해 익명의 사용 데이터를 공유하시겠습니까? 대화, 코드 또는 개인 데이터는 수집하지 않습니다."
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "goose 개선에 도움을 주세요"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "자세히 알아보기"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "예, 익명의 사용 데이터를 공유합니다"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "아니요"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "구성 오류"
   },

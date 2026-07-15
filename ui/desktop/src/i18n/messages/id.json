@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "Gunakan penyedia lain"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "Apakah Anda ingin membagikan data penggunaan anonim untuk membantu meningkatkan goose? Kami tidak pernah mengumpulkan percakapan, kode, atau data pribadi Anda."
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "Bantu tingkatkan goose"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "Pelajari lebih lanjut"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "Ya, bagikan data penggunaan anonim"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "Tidak, terima kasih"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "Kesalahan Konfigurasi"
   },

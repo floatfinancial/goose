@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "別のプロバイダーを使用"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "gooseの改善のため、匿名の使用状況データを共有しますか？会話、コード、個人データは一切収集しません。"
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "gooseの改善に協力"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "詳しく見る"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "はい、匿名の使用状況データを共有する"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "いいえ、結構です"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "設定エラー"
   },

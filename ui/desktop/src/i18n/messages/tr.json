@@ -4358,21 +4358,6 @@
   "switchModelModal.useOtherProvider": {
     "defaultMessage": "Başka sağlayıcı kullan"
   },
-  "telemetryConsentPrompt.description": {
-    "defaultMessage": "goose'nin iyileştirilmesine yardımcı olmak için anonim kullanım verilerini paylaşmak ister misiniz? Konuşmalarınızı, kodlarınızı veya kişisel verilerinizi asla toplamıyoruz."
-  },
-  "telemetryConsentPrompt.heading": {
-    "defaultMessage": "goose'nin iyileştirilmesine yardımcı olun"
-  },
-  "telemetryConsentPrompt.learnMore": {
-    "defaultMessage": "Daha fazla bilgi edinin"
-  },
-  "telemetryConsentPrompt.optIn": {
-    "defaultMessage": "Evet, anonim kullanım verilerini paylaş"
-  },
-  "telemetryConsentPrompt.optOut": {
-    "defaultMessage": "Hayır teşekkürler"
-  },
   "telemetrySettings.configErrorTitle": {
     "defaultMessage": "Yapılandırma Hatası"
   },
