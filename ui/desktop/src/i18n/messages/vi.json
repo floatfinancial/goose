@@ -1701,10 +1701,10 @@
     "defaultMessage": "Hỏi goose bất cứ điều gì..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose đang nén cuộc trò chuyện..."
+    "defaultMessage": "Sponge đang nén cuộc trò chuyện..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose đang xử lý…"
+    "defaultMessage": "Sponge đang xử lý…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "đang tải cuộc trò chuyện..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "đang khởi động lại phiên..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose đang xử lý…"
+    "defaultMessage": "Sponge đang xử lý…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose đang suy nghĩ…"
+    "defaultMessage": "Sponge đang suy nghĩ…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose đang chờ…"
+    "defaultMessage": "Sponge đang chờ…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Xóa mô hình này? Bạn có thể tải lại sau."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Máy chủ có thể đang khởi động hoặc tạm thời không khả dụng."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Không thể kết nối với máy chủ Goose"
+    "defaultMessage": "Không thể kết nối với máy chủ Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Thử lại"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Tác nhân AI cục bộ của bạn. Kết nối một nhà cung cấp mô hình AI để bắt đầu."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Chào mừng đến với goose"
+    "defaultMessage": "Chào mừng đến với Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Bạn đã sẵn sàng bắt đầu sử dụng goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Thử lại"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Bạn"

@@ -1,6 +1,5 @@
 import GooseLogo from './GooseLogo';
 import AnimatedIcons from './AnimatedIcons';
-import FlyingBird from './FlyingBird';
 import { ChatState } from '../types/chatState';
 import { defineMessages, useIntl } from '../i18n';
 
@@ -16,23 +15,23 @@ const i18n = defineMessages({
   },
   thinking: {
     id: 'loadingGoose.thinking',
-    defaultMessage: 'goose is thinking…',
+    defaultMessage: 'Sponge is thinking…',
   },
   streaming: {
     id: 'loadingGoose.streaming',
-    defaultMessage: 'goose is working on it…',
+    defaultMessage: 'Sponge is working on it…',
   },
   waiting: {
     id: 'loadingGoose.waiting',
-    defaultMessage: 'goose is waiting…',
+    defaultMessage: 'Sponge is waiting…',
   },
   compacting: {
     id: 'loadingGoose.compacting',
-    defaultMessage: 'goose is compacting the conversation...',
+    defaultMessage: 'Sponge is compacting the conversation...',
   },
   idle: {
     id: 'loadingGoose.idle',
-    defaultMessage: 'goose is working on it…',
+    defaultMessage: 'Sponge is working on it…',
   },
   restartingAgent: {
     id: 'loadingGoose.restartingAgent',
@@ -43,7 +42,7 @@ const i18n = defineMessages({
 const STATE_ICONS: Record<ChatState, React.ReactNode> = {
   [ChatState.LoadingConversation]: <AnimatedIcons className="flex-shrink-0" cycleInterval={600} />,
   [ChatState.Thinking]: <AnimatedIcons className="flex-shrink-0" cycleInterval={600} />,
-  [ChatState.Streaming]: <FlyingBird className="flex-shrink-0" cycleInterval={150} />,
+  [ChatState.Streaming]: <AnimatedIcons className="flex-shrink-0" cycleInterval={600} />,
   [ChatState.WaitingForUserInput]: (
     <AnimatedIcons className="flex-shrink-0" cycleInterval={600} variant="waiting" />
   ),

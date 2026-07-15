@@ -27,9 +27,9 @@ interface UpdateCheckResult {
 }
 
 export class GitHubUpdater {
-  private readonly owner = process.env.GITHUB_OWNER || 'aaif-goose';
+  private readonly owner = process.env.GITHUB_OWNER || 'floatfinancial';
   private readonly repo = process.env.GITHUB_REPO || 'goose';
-  private readonly bundleName = process.env.GOOSE_BUNDLE_NAME || 'Goose';
+  private readonly bundleName = process.env.GOOSE_BUNDLE_NAME || 'Sponge';
   private readonly apiUrl = `https://api.github.com/repos/${this.owner}/${this.repo}/releases/latest`;
 
   async checkForUpdates(): Promise<UpdateCheckResult> {
@@ -101,20 +101,12 @@ export class GitHubUpdater {
 
       log.info(`GitHubUpdater: Looking for asset for platform: ${platform}, arch: ${arch}`);
 
-      if (platform === 'darwin') {
-        // macOS
-        if (arch === 'arm64') {
-          assetName = `${this.bundleName}.zip`;
-        } else {
-          assetName = `${this.bundleName}_intel_mac.zip`;
-        }
-      } else if (platform === 'win32') {
-        // Windows - for future support
-        assetName = `${this.bundleName}-win32-x64.zip`;
-      } else {
-        // Linux - for future support
-        assetName = `${this.bundleName}-linux-${arch}.zip`;
+      if (platform !== 'darwin' || arch !== 'arm64') {
+        throw new Error(
+          `Sponge only ships macOS Apple Silicon builds; refusing update on platform=${platform} arch=${arch}`
+        );
       }
+      assetName = `${this.bundleName}.zip`;
 
       log.info(`GitHubUpdater: Looking for asset named: ${assetName}`);
       log.info(`GitHubUpdater: Available assets: ${release.assets.map((a) => a.name).join(', ')}`);

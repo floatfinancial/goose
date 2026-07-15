@@ -1,10 +1,9 @@
+# Disabled on Float's fork: this workflow hits real Anthropic / OpenAI / Google
+# / Databricks endpoints on every PR, and Sponge ships only through Bedrock SSO.
+# Left in-place (manually dispatchable) in case Float ever wants to re-enable
+# smoke coverage against direct provider APIs — add the four keys as repo
+# secrets and restore the `pull_request` + `push` triggers.
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       branch:

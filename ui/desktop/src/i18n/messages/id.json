@@ -1701,10 +1701,10 @@
     "defaultMessage": "Tanyakan apa saja kepada goose..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose sedang meringkas percakapan..."
+    "defaultMessage": "Sponge sedang meringkas percakapan..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose sedang mengerjakannya…"
+    "defaultMessage": "Sponge sedang mengerjakannya…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "memuat percakapan..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "memulai ulang sesi..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose sedang mengerjakannya…"
+    "defaultMessage": "Sponge sedang mengerjakannya…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose sedang berpikir…"
+    "defaultMessage": "Sponge sedang berpikir…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose sedang menunggu…"
+    "defaultMessage": "Sponge sedang menunggu…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Hapus model ini? Anda dapat mengunduhnya kembali nanti."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Server mungkin sedang dimulai atau tidak tersedia untuk sementara."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Tidak dapat terhubung ke server Goose"
+    "defaultMessage": "Tidak dapat terhubung ke server Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Coba Lagi"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Agen AI lokal Anda. Hubungkan penyedia model AI untuk memulai."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Selamat datang di goose"
+    "defaultMessage": "Selamat datang di Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Anda siap untuk mulai menggunakan goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Coba Lagi"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Anda"

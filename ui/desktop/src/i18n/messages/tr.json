@@ -1701,10 +1701,10 @@
     "defaultMessage": "goose'a herhangi bir şey sorun..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose konuşmayı sıkıştırıyor..."
+    "defaultMessage": "Sponge konuşmayı sıkıştırıyor..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose bunun üzerinde çalışıyor…"
+    "defaultMessage": "Sponge bunun üzerinde çalışıyor…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "konuşma yükleniyor..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "oturum yeniden başlatılıyor..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose bunun üzerinde çalışıyor…"
+    "defaultMessage": "Sponge bunun üzerinde çalışıyor…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose düşünüyor…"
+    "defaultMessage": "Sponge düşünüyor…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose bekliyor…"
+    "defaultMessage": "Sponge bekliyor…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Bu model silinsin mi? Daha sonra tekrar indirebilirsiniz."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Sunucu başlatılıyor veya geçici olarak kullanılamıyor olabilir."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Goose sunucusuna bağlanılamıyor"
+    "defaultMessage": "Sponge sunucusuna bağlanılamıyor"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Yeniden dene"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Yerel AI temsilciniz. Başlamak için bir AI model sağlayıcısına bağlanın."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "goose'a hoş geldiniz"
+    "defaultMessage": "Sponge'a hoş geldiniz"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "goose'yi kullanmaya başlamaya hazırsınız."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Tekrar Deneyin"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "sen"

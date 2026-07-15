@@ -1,63 +1,57 @@
-<div align="center">
+# Sponge 🧽
 
-# goose
+Sponge is Float's internal AI agent — a desktop app for knowledge workers and a CLI for developers. It's a downstream distribution of the open-source [goose](https://github.com/aaif-goose/goose) project by AAIF (Agentic AI Foundation), rebranded and preconfigured for Float.
 
-_your native open source AI agent — desktop app, CLI, and API — for code, workflows, and everything in between_
+**Internal use only.** Not for external distribution.
 
-<p align="center">
-  <a href="https://opensource.org/licenses/Apache-2.0"
-    ><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg"></a>
-  <a href="https://discord.gg/goose-oss"
-    ><img src="https://img.shields.io/discord/1287729918100246654?logo=discord&logoColor=white&label=Join+Us&color=blueviolet" alt="Discord"></a>
-  <a href="https://github.com/aaif-goose/goose/actions/workflows/ci.yml"
-     ><img src="https://img.shields.io/github/actions/workflow/status/aaif-goose/goose/ci.yml?branch=main" alt="CI"></a>
-  <a href="https://insights.linuxfoundation.org/project/goose"><img src="https://insights.linuxfoundation.org/api/badge/health-score?project=goose"></a>
-  <a href="https://repology.org/project/goose-cli/versions"><img src="https://repology.org/badge/tiny-repos/goose-cli.svg" alt="Packaging status"></a>
-</p>
+## Install
 
-<a href="https://trendshift.io/repositories/25298?utm_source=repository-badge&amp;utm_medium=badge&amp;utm_campaign=badge-repository-25298" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/repositories/25298" alt="aaif-goose%2Fgoose | Trendshift" width="250" height="55"/></a>
+### Desktop (knowledge workers)
 
-</div>
+Delivered via MDM. First launch prompts for AWS SSO sign-in — no API keys, no config. The app will auto-update from the latest release published to this repo.
 
+### CLI (developers)
 
-goose is a general-purpose AI agent that runs on your machine. Not just for code — use it for research, writing, automation, data analysis, or anything you need to get done.
-
-A native desktop app for macOS, Linux, and Windows. A full CLI for terminal workflows. An API to embed it anywhere. Built in Rust for performance and portability.
-
-goose works with 15+ providers — Anthropic, OpenAI, Google, Ollama, OpenRouter, Azure, Bedrock, and more. Use API keys or your existing Claude, ChatGPT, or Gemini subscriptions via [ACP](https://goose-docs.ai/docs/guides/acp-providers). Connect to 70+ extensions via the [Model Context Protocol](https://modelcontextprotocol.io/) open standard.
-
-goose is part of the [Agentic AI Foundation (AAIF)](https://aaif.io/) at the Linux Foundation.
-
-# Get started
-
-**[Download the desktop app](https://goose-docs.ai/docs/getting-started/installation)** for macOS, Linux, and Windows.
-
-Or install the CLI:
+Download the latest `goose` binary from [Releases](https://github.com/floatfinancial/goose/releases), then:
 
 ```bash
-curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | bash
+goose auth aws-sso    # one-time SSO sign-in
+goose session         # start an interactive session
 ```
 
-# Quick links
-- [Quickstart](https://goose-docs.ai/docs/quickstart)
-- [Installation](https://goose-docs.ai/docs/getting-started/installation)
-- [Tutorials](https://goose-docs.ai/docs/category/tutorials)
-- [Documentation](https://goose-docs.ai/docs/category/getting-started)
-- [Governance](https://github.com/aaif-goose/goose/blob/main/GOVERNANCE.md)
-- [Custom Distributions](https://github.com/aaif-goose/goose/blob/main/CUSTOM_DISTROS.md) — build your own goose distro with preconfigured providers, extensions, and branding
+The CLI binary is named `goose` (unchanged from upstream) to keep muscle memory and scripts working.
 
-## Need help?
-- [Diagnostics & Reporting](https://goose-docs.ai/docs/troubleshooting/diagnostics-and-reporting)
-- [Known Issues](https://goose-docs.ai/docs/troubleshooting/known-issues)
+## What's different from upstream
 
-# a little goose humor 🪿
+- **Zero-config AWS Bedrock via IAM Identity Center SSO** — see `crates/goose/src/providers/aws_sso.rs` and `bedrock_float.rs`.
+- **Rebranded as Sponge** for the desktop app — see `docs/float-fork/PATCHES.md`.
+- **Telemetry disabled at source** — see `crates/goose/src/posthog.rs`.
+- **Preconfigured provider tiles** — `ui/desktop/src/distroConfig.ts` sets defaults for the Float Identity Center start URL and Bedrock region.
 
-> Why did the developer choose goose as their AI agent?
-> 
-> Because it always helps them "migrate" their code to production! 🚀
+Everything else tracks upstream. We periodically sync via `just sync-fork` (see `.pi/skills/sync-fork/SKILL.md`).
 
-# goose around with us
-- [Discord](https://discord.gg/goose-oss)
-- [YouTube](https://www.youtube.com/@goose-oss)
-- [LinkedIn](https://www.linkedin.com/company/goose-oss)
-- [Twitter/X](https://x.com/goose_oss)
+## Working on the fork
+
+- `AGENTS.md` — coding rules for this repo.
+- `CUSTOM_DISTROS.md` — the goose customization guide.
+- `docs/float-fork/PATCHES.md` — manifest of every upstream file Float patches, and how to resolve merge conflicts.
+- `BUILDING_LINUX.md`, `BUILDING_DOCKER.md` — platform build notes.
+- `I18N.md` — how translations flow.
+
+Common commands:
+
+```bash
+just release-binary       # build the CLI
+just run-ui-only          # run the desktop UI against the last-built CLI
+just check-everything     # fmt + clippy + UI lint
+```
+
+## Reporting bugs
+
+Internal only — [open an issue in this repo](https://github.com/floatfinancial/goose/issues/new?template=bug_report.md). The desktop app's Settings → Diagnostics screen exports a diagnostics zip; attach it.
+
+## License and attribution
+
+Sponge is Apache 2.0, inherited from upstream goose. Every source file's original copyright notice is preserved. See `LICENSE`.
+
+Sponge is not endorsed by AAIF and is not the "official" goose. See [upstream goose](https://github.com/aaif-goose/goose) for the source project.

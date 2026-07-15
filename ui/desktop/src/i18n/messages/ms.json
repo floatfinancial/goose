@@ -1701,10 +1701,10 @@
     "defaultMessage": "Tanya goose apa sahaja..."
   },
   "loadingGoose.compacting": {
-    "defaultMessage": "goose sedang memadatkan perbualan..."
+    "defaultMessage": "Sponge sedang memadatkan perbualan..."
   },
   "loadingGoose.idle": {
-    "defaultMessage": "goose sedang mengusahakannya…"
+    "defaultMessage": "Sponge sedang mengusahakannya…"
   },
   "loadingGoose.loadingConversation": {
     "defaultMessage": "memuatkan perbualan..."
@@ -1713,13 +1713,13 @@
     "defaultMessage": "memulakan semula sesi..."
   },
   "loadingGoose.streaming": {
-    "defaultMessage": "goose sedang mengusahakannya…"
+    "defaultMessage": "Sponge sedang mengusahakannya…"
   },
   "loadingGoose.thinking": {
-    "defaultMessage": "goose sedang berfikir…"
+    "defaultMessage": "Sponge sedang berfikir…"
   },
   "loadingGoose.waiting": {
-    "defaultMessage": "goose sedang menunggu…"
+    "defaultMessage": "Sponge sedang menunggu…"
   },
   "localInferenceSettings.deleteConfirm": {
     "defaultMessage": "Padam model ini? Anda boleh memuat turunnya semula kemudian."
@@ -2370,7 +2370,7 @@
     "defaultMessage": "Pelayan mungkin sedang dimulakan atau tidak tersedia buat sementara waktu."
   },
   "onboardingGuard.checkProviderErrorTitle": {
-    "defaultMessage": "Tidak dapat menyambung ke pelayan Goose"
+    "defaultMessage": "Tidak dapat menyambung ke pelayan Sponge"
   },
   "onboardingGuard.retry": {
     "defaultMessage": "Cuba Semula"
@@ -2379,7 +2379,7 @@
     "defaultMessage": "Ejen AI tempatan anda. Sambungkan penyedia model AI untuk bermula."
   },
   "onboardingGuard.welcomeTitle": {
-    "defaultMessage": "Selamat datang ke goose"
+    "defaultMessage": "Selamat datang ke Sponge"
   },
   "onboardingSuccess.allSet": {
     "defaultMessage": "Anda sudah bersedia untuk mula menggunakan goose."
@@ -3732,7 +3732,7 @@
     "defaultMessage": "Cuba Lagi"
   },
   "sessionViewComponents.role.assistant": {
-    "defaultMessage": "Goose"
+    "defaultMessage": "Sponge"
   },
   "sessionViewComponents.role.user": {
     "defaultMessage": "Anda"
