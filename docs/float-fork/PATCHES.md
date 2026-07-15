@@ -596,6 +596,14 @@ Intel Mac desktop bundling + its PR-comment download link.
 - `.github/workflows/python-sdk-wheels.yml` — publishes Python SDK wheels for Linux (manylinux). Sponge doesn't distribute Python bindings. Delete when confirmed no consumer needs them.
 - `.github/workflows/ci.yml` — has a Windows cross-compile sanity step (`rustup target add x86_64-pc-windows-msvc`). Not on the distribution path. Trim if it starts failing.
 
+### `.github/workflows/pr-smoke-test.yml` (disabled, not deleted)
+
+**What we changed:** removed the `pull_request` and `push` triggers, leaving only `workflow_dispatch`. The workflow (Live Provider Tests + Compaction Tests + Smoke Tests) now runs only when manually invoked. Header comment explains why and how to re-enable.
+
+Rationale: this workflow hits real Anthropic / OpenAI / Google / Databricks endpoints on every PR to validate goose against the direct provider APIs. Sponge ships only through Bedrock SSO, so Float has no product reason to burn tokens on four providers' bills for every merge. Kept in-place (rather than deleted) in case Float ever wants direct-provider smoke coverage back — restore the two triggers and add `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` / `GOOGLE_API_KEY` / `DATABRICKS_HOST` + `DATABRICKS_TOKEN` as repo secrets.
+
+**On merge conflict:** keep our disabled triggers. If upstream restructures the triggers block, port the disable into the new shape.
+
 ---
 
 ## Adding a new patched file
