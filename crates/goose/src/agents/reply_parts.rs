@@ -700,13 +700,33 @@ mod tests {
 
     #[tokio::test]
     async fn prepare_tools_returns_sorted_tools_including_frontend() -> anyhow::Result<()> {
-        let agent = crate::agents::Agent::new();
+        // NOTE(float): use a hermetic SessionManager + Agent config here rather
+        // than Agent::new(), which routes through the global SESSION_STORAGE
+        // LazyLock. Other tests in the crate (`goose_apps::cache`, `hints::load_hints`)
+        // mutate `GOOSE_PATH_ROOT` via raw env::set_var (no env_lock), which can
+        // race-poison the singleton with a tempdir that later gets dropped,
+        // producing intermittent SQLITE_CANTOPEN failures here.
+        // TODO(upstream): file bug against aaif-goose/goose for the singleton +
+        // unguarded env::set_var races, then remove this workaround.
+        use crate::agents::{AgentConfig, GoosePlatform};
+        use crate::config::permission::PermissionManager;
+        use crate::session::session_manager::SessionManager;
 
-        let session = agent
-            .config
-            .session_manager
+        let tmp = tempfile::TempDir::new()?;
+        let session_manager = std::sync::Arc::new(SessionManager::new(tmp.path().to_path_buf()));
+
+        let agent = crate::agents::Agent::with_config(AgentConfig::new(
+            session_manager.clone(),
+            PermissionManager::instance(),
+            None,
+            GooseMode::default(),
+            false,
+            GoosePlatform::GooseCli,
+        ));
+
+        let session = session_manager
             .create_session(
-                std::env::current_dir().unwrap(),
+                tmp.path().to_path_buf(),
                 "test-prepare-tools".to_string(),
                 SessionType::Hidden,
                 GooseMode::default(),

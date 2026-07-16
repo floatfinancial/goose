@@ -704,6 +704,7 @@ enum GatewayCommand {
     },
 }
 
+#[cfg(feature = "aws-providers")]
 #[derive(Subcommand, Debug, Clone)]
 enum AuthCommand {
     /// Configure AWS SSO (IAM Identity Center) and switch Goose to Amazon Bedrock.
@@ -738,6 +739,7 @@ enum AuthCommand {
     },
 }
 
+#[cfg(feature = "aws-providers")]
 async fn handle_auth_subcommand(cmd: AuthCommand) -> Result<()> {
     match cmd {
         AuthCommand::AwsSso {
@@ -875,6 +877,7 @@ enum Command {
     Doctor {},
 
     #[command(about = "Authenticate goose against a cloud provider", subcommand)]
+    #[cfg(feature = "aws-providers")]
     Auth(AuthCommand),
 
     /// Manage system prompts and behaviors
@@ -1396,6 +1399,7 @@ fn get_command_name(command: &Option<Command>) -> &'static str {
     match command {
         Some(Command::Configure {}) => "configure",
         Some(Command::Doctor {}) => "doctor",
+        #[cfg(feature = "aws-providers")]
         Some(Command::Auth(_)) => "auth",
         Some(Command::Info { .. }) => "info",
         Some(Command::Mcp { .. }) => "mcp",
@@ -2285,6 +2289,7 @@ pub async fn cli() -> anyhow::Result<()> {
         }
         Some(Command::Configure {}) => handle_configure().await,
         Some(Command::Doctor {}) => crate::commands::doctor::handle_doctor().await,
+        #[cfg(feature = "aws-providers")]
         Some(Command::Auth(cmd)) => handle_auth_subcommand(cmd).await,
         Some(Command::Info { verbose, check }) => handle_info(verbose, check).await,
         Some(Command::Mcp { server }) => handle_mcp_command(server).await,

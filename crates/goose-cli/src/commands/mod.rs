@@ -1,3 +1,4 @@
+#[cfg(feature = "aws-providers")]
 pub mod auth;
 pub mod configure;
 pub mod doctor;
