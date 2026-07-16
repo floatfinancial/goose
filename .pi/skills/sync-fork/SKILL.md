@@ -98,22 +98,31 @@ git add <path>
 **All of the following must pass.** If any fails, do not commit — surface the
 failure. Never bypass with `--no-verify` or by disabling a test.
 
+The Rust test invocations mirror upstream CI in `.github/workflows/ci.yml`
+(matrix `tls-feature`). Running `cargo test -p goose` with default features is
+wrong — upstream's crates gate their crypto backends (jsonwebtoken,
+rustls/native-tls, aws-lc-rs) and their platform extensions (code-mode) behind
+features, and default features are empty. Match upstream or you'll chase
+ghosts.
+
 ```bash
 source bin/activate-hermit
 
-# Rust
+# Rust — mirror upstream CI's tls-feature matrix job.
 cargo fmt --check
 cargo build
 cargo clippy --all-targets -- -D warnings
-cargo test -p goose
+cargo test -p goose --no-default-features --features rustls-tls,code-mode
 cargo test -p goose --features aws-providers --lib bedrock_float
-cargo test -p goose-cli
+cargo test -p goose-providers --no-default-features --features rustls-tls
+cargo test -p goose-cli --no-default-features --features rustls-tls,code-mode -- --skip scenario_tests::scenarios::tests
+cargo test -p goose-cli --no-default-features --features rustls-tls,code-mode --jobs 1 scenario_tests::scenarios::tests
 
 # Desktop UI
 cd ui/desktop && pnpm typecheck && pnpm test && cd -
 
 # Smoke: our custom subcommand parses
-cargo run -p goose-cli --features aws-providers -- auth aws-sso --help >/dev/null
+cargo run -p goose-cli --bin goose --features aws-providers -- auth aws-sso --help >/dev/null
 ```
 
 For a fuller sweep on a big sync, also run `just check-everything`.

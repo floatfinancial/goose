@@ -76,18 +76,27 @@ this manifest by hand. That's cheaper and less error-prone.
 - Added `Auth(AuthCommand)` variant to `Command`.
 - Added the dispatch arm `Some(Command::Auth(cmd)) => handle_auth_subcommand(cmd).await`.
 - Added `Some(Command::Auth(_)) => "auth"` to `get_command_name`.
+- All five additions are gated behind `#[cfg(feature = "aws-providers")]` because the subcommand only makes sense when Bedrock is compiled in — without the gate, `cargo test -p goose-cli --no-default-features --features rustls-tls,code-mode` (upstream CI's TLS-matrix invocation) fails to compile.
 
-**On merge conflict:** all four additions are independent inserts. Reapply each in the new file location.
+**On merge conflict:** all four additions are independent inserts. Reapply each in the new file location. Keep the `#[cfg(feature = "aws-providers")]` attribute on all of them.
 
 ### `crates/goose-cli/src/commands/mod.rs`
 
-**What we changed:** added `pub mod auth;` at the top.
+**What we changed:** added `#[cfg(feature = "aws-providers")] pub mod auth;` at the top. The `cfg` gate is required so `cargo test -p goose-cli --no-default-features` (upstream CI shape) still builds — without it, `auth.rs` fails to compile because it uses `goose::providers::aws_sso` and `goose::providers::bedrock`, both gated behind `aws-providers` in the `goose` crate.
 
-**On merge conflict:** keep the line.
+**On merge conflict:** keep the line and its `cfg` gate.
 
 ### `crates/goose/Cargo.toml`
 
-**What we changed:** added AWS SSO / STS / SDK deps + feature list entries for the `aws-providers` feature. See git log for the exact set.
+**What we changed:** added AWS SSO / STS / SDK deps + feature list entries for the `aws-providers` feature. See git log for the exact set. Also added `"serde"` to `indexmap` features — upstream removed `utoipa` in #10505, which had been transitively enabling `indexmap/serde`; without it, `crates/goose/src/config/providers.rs` fails to build when checking `-p goose` alone (feature unification saves the workspace build, but not per-crate checks).
+
+### `crates/goose/src/agents/reply_parts.rs` (test-only)
+
+**What we changed:** the `prepare_tools_returns_sorted_tools_including_frontend` test now constructs the `Agent` via `Agent::with_config` + a fresh `SessionManager::new(tempdir)` instead of `Agent::new()`. `Agent::new()` routes through the global `SESSION_STORAGE` `LazyLock` in `crates/goose/src/session/session_manager.rs:56`, which captures `Paths::data_dir()` at first-access. Other tests in the crate (`goose_apps::cache::tests::with_temp_config`, `hints::load_hints::tests::test_global_agents_md_*`) mutate `GOOSE_PATH_ROOT` via raw `env::set_var` (no `env_lock`), so the singleton can lock onto a `TempDir` that later drops, and any subsequent `create_session` call fails with `SQLITE_CANTOPEN`. This flaked intermittently (~80% failure rate under our default `cargo test -p goose --no-default-features --features rustls-tls,code-mode` invocation on Apple Silicon). The fix is a hermetic Agent per test; the underlying architecture bug is upstream's.
+
+**Upstream status:** to be filed against `aaif-goose/goose` — proposed fixes are (a) refactor the two `LazyLock` singletons in `session_manager.rs` and `permission.rs` so path resolution isn't captured at first-access, or (b) audit every `env::set_var("GOOSE_PATH_ROOT", …)` in the test tree and require `env_lock::lock_env`. When either lands upstream and reaches our fork, retire this patch.
+
+**On merge conflict:** if upstream modifies the same test, replay the hermetic pattern (`Agent::with_config` + `SessionManager::new(tempdir)`) into the new shape. If upstream fixes the singleton bug directly, drop this patch entirely.
 
 **On merge conflict:** keep our added lines. If upstream renames the feature or restructures the deps table, port our additions into the new shape. **Never hand-edit `Cargo.lock` — run `cargo build` to re-resolve.**
 

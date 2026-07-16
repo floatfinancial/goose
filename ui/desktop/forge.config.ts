@@ -29,6 +29,10 @@ let cfg = {
       'Sponge needs access to your calendars to help manage and query calendar events.',
     NSRemindersUsageDescription:
       'Sponge needs access to your reminders to help manage and query reminders.',
+    NSMicrophoneUsageDescription:
+      'Sponge needs access to your microphone for voice dictation.',
+    NSAppleEventsUsageDescription:
+      'Sponge needs access to send Apple Events to control other apps on your behalf.',
   },
 };
 
